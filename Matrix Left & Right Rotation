@@ -1,0 +1,38 @@
+def transpose(matrix,n):
+    for i in range(n):
+        for j in range(i,n):
+            matrix[i][j],matrix[j][i]=matrix[j][i],matrix[i][j]
+
+def rev(matrix):
+    for row in matrix:
+        row.reverse()
+
+n=int(input())
+matrix=[]
+for i in range(n):
+    matrix.append(list(map(int,input().split())))
+sequence=input()
+count_L=0
+count_R=0
+for char in sequence:
+    if char=='L':
+        count_L+=1
+    else:
+        count_R+=1
+
+if count_L>count_R:
+    l=count_L-count_R
+    for i in range(l):
+        rev(matrix)
+        transpose(matrix,n)
+    for i in matrix:    
+        print(*i)
+else:
+    r=count_R-count_L
+    for i in range(r):
+        transpose(matrix,n)
+        rev(matrix)
+    for i in matrix:    
+        print(*i)
+        
+        
