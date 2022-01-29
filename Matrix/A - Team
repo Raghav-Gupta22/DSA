@@ -1,0 +1,9 @@
+Problem Link: https://codeforces.com/contest/231/problem/A
+
+t=int(input())
+c=0
+for i in range(t):
+    l=list(map(int,input().split()))
+    if l.count(1)>1:
+        c+=1
+print(c)
