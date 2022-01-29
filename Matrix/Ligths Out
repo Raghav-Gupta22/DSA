@@ -1,0 +1,26 @@
+https://codeforces.com/contest/275/problem/A
+
+matrix=[]
+n=3
+for i in range(n):
+    matrix.append(list(map(int,input().split())))
+ans=[]
+for i in range(n):
+    ans.append([1]*n)
+
+for i in range(n):
+    for j in range(n):
+        if matrix[i][j]%2==1:
+            ans[i][j]=int(not(ans[i][j]))
+            if i<n-1:
+                ans[i+1][j]=int(not(ans[i+1][j]))
+            if j<n-1:
+                ans[i][j+1]=int(not(ans[i][j+1]))
+            if i>0:
+                ans[i-1][j]=int(not(ans[i-1][j]))
+            if j>0:
+                ans[i][j-1]=int(not(ans[i][j-1]))
+for i in range(n):
+    for j in range(n):
+        print(ans[i][j],end="")
+    print()                           
