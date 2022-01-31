@@ -1,0 +1,30 @@
+Problem Link :https://www.hackerearth.com/practice/data-structures/arrays/multi-dimensional/practice-problems/algorithm/kshitiz-and-matrix-7ddc9719/
+
+t=int(input())
+for _ in range(t):
+    n,m=map(int,input().split())
+    matrix=[]
+    for i in range(n):
+        matrix.append(list(map(int,input().split())))
+    row=[]
+    column=[]
+    maxx=0
+    minn=float('inf')
+    for i in range(n):
+        for j in range(m):
+            if matrix[i][j]>maxx:
+                maxx=matrix[i][j]
+            if matrix[i][j]<minn:
+                minn=matrix[i][j]
+
+    for i in range(n):
+        for j in range(m):
+            if matrix[i][j]==maxx or matrix[i][j]==minn:
+                row.append(i)
+                column.append(j)
+    c=0
+    for i in range(n):
+        for j in range(m):
+            if i not in row and j not in column:
+                c+=1
+    print(c)
