@@ -1,0 +1,88 @@
+PROBLEM STATEMENT:
+
+You want to hire some employees. There are N employees in total each having a skill U and wants a salary 
+V.
+These employees are not independent and rather have made some groups. Thus there are Q statements 
+each starting that X and Y belong to the same group. If you want to hire a person then, his entire group 
+must be hired. You have a budget B. You want to hire employees such that you get the maximum possible 
+skill within the budget.
+Example: 
+Consider N = 4, Q = 2, B = 17
+Let the employees and their respective skills be:
+1. 12 7
+2. 9 5
+3. 13 8
+4. 15 11
+Let the grouping be:
+1 3
+2 4
+Therefore, employee 1 and 3 can be hired within the budget of 17. The skill acquired will be 25
+
+
+SOLUTION:
+
+def knapsack(W ,wt, val,num):
+    dp=[]
+    for i in range(num+1):
+        dp.append([0]*(W+1))
+
+    for i in range(1,num + 1):
+        for j in range(1,W + 1):
+            if wt[i - 1] > j:
+                dp[i][j] = dp[i - 1][j]
+            else:
+                dp[i][j] = max(dp[i - 1][j], val[i - 1] + dp[i - 1][j - wt[i - 1]])
+    return dp[num][W]
+
+
+def dfs(temp,emp):
+    temp.append(emp)
+    visited[emp]=True
+    for i in graph[emp]:
+        if visited[i]==False:
+            dfs(temp,i)
+    return temp
+
+def create_graph():
+    for i in range(1,n+1):
+        graph[i]=[]
+
+    for i,j in groups:
+        graph[i].append(j)
+        graph[j].append(i)
+    #print(graph)
+
+    
+
+if __name__ == '__main__':
+    n = 7
+    q = 4
+    b = 41
+    emp_details = [[12, 7], [11, 6], [12, 6], [15, 11], 
+                    [20, 20], [21, 16], [23, 14]]
+    groups = [[1, 2], [2, 3], [2, 5], [4, 6]]
+    visited=[False]*(n+1)
+    res=[]
+    graph={}
+    create_graph()
+    for emp in range(1,n+1):
+        if visited[emp]==False:
+            res.append(dfs([],emp))
+    #print(res)
+
+    skill=[]
+    salary=[]
+    for group in res:
+        skl=0
+        slr=0
+        for emp_no in group:
+            i,j = emp_details[emp_no-1]
+            skl+=i
+            slr+=j
+        skill.append(skl)
+        salary.append(slr)
+    print(salary,skill)
+    print( knapsack(b, salary, skill,len(res)))
+    
+    
+    
