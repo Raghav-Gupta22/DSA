@@ -1,0 +1,29 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+
+#RECURSIVE SOLUTION ------THIS WILL GIVE YOU TLE
+
+
+class Solution:
+    
+    def knapSack(self,W, wt, val, n):       
+        
+        if W==0 or n==0:
+            return 0
+        
+        elif wt[n-1]<W:
+            return max((val[n-1]+self.knapSack(W-val[n-1],wt,val,n-1)),self.knapSack(W,wt,val,n-1))
+        
+        else:
+            return self.knapSack(W,wt,val,n-1)
+
+if __name__ == '__main__':
+    test_cases = int(input())
+    for cases in range(test_cases):
+        n = int(input())
+        W = int(input())
+        val = list(map(int,input().strip().split()))
+        wt = list(map(int,input().strip().split()))
+        ob=Solution()
+        print(ob.knapSack(W,wt,val,n))
+        
+        
