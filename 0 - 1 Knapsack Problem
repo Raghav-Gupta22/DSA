@@ -27,3 +27,39 @@ if __name__ == '__main__':
         print(ob.knapSack(W,wt,val,n))
         
         
+#DP SOLUTION WITH RECURSION
+
+class Solution:
+    def knapSack(self,W, wt, val, n):
+        dp=[[0 for i in range(W+1)] for j in range(n+1)]
+        
+        def recur(W, wt, val, n):
+            if W==0 or n==0:
+                return 0
+                
+            if dp[n][W]!=0:
+                return dp[n][W]
+             
+            if wt[n-1]<=W:
+                dp[n][W]=max((val[n-1]+recur(W-wt[n-1],wt,val,n-1)),recur(W,wt,val,n-1))          
+                return dp[n][W]
+                
+            elif wt[n-1] > W:
+                dp[n][W]=recur(W,wt,val,n-1)
+                return dp[n][W]
+                
+        return recur(W, wt, val, n)
+
+if __name__ == '__main__':
+    test_cases = int(input())
+    for cases in range(test_cases):
+        n = int(input())
+        W = int(input())
+        val = list(map(int,input().strip().split()))
+        wt = list(map(int,input().strip().split()))
+        ob=Solution()
+        print(ob.knapSack(W,wt,val,n))
+
+
+
+
