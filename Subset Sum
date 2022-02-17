@@ -1,0 +1,29 @@
+class Solution:
+    def isSubsetSum (self, N, arr, sum):
+        def recur(n,arr,sum):
+            if sum==0:
+                return 1
+            if n==0:
+                return 0
+            
+            if arr[n-1]>sum:
+                return recur(n-1,arr,sum)
+            return recur(n-1,arr,sum) or recur(n-1,arr,sum-arr[n-1]) 
+        
+        return recur(N,arr,sum)
+
+if __name__ == '__main__': 
+    t = int (input ())
+    for _ in range (t):
+        N = int(input())
+        arr = input().split()
+        for itr in range(N):
+            arr[itr] = int(arr[itr])
+        sum = int(input())
+
+        ob = Solution()
+        if ob.isSubsetSum(N,arr,sum)==True:
+            print(1)
+        else :
+            print(0)
+            
