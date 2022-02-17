@@ -1,3 +1,6 @@
+Problem link: https://practice.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1/#
+
+---------------#RECURSIVE SOLUTION
 class Solution:
     def isSubsetSum (self, N, arr, sum):
         def recur(n,arr,sum):
@@ -27,3 +30,39 @@ if __name__ == '__main__':
         else :
             print(0)
             
+------------------#MEMOIZATION SOLUTION
+
+class Solution:
+    def isSubsetSum (self, N, arr, summ):
+        dp = [[-1]*(summ+1) for i in range(N+1)]
+        
+        def helper(N,summ,arr,dp):
+            if dp[N][summ]!=-1:
+                return dp[N][summ]
+            if summ== 0:
+                dp[N][summ] = True
+                return dp[N][summ]
+            if N == 0:
+                dp[N][summ] = False
+                return dp[N][summ]
+            if arr[N-1]>summ:
+                dp[N][summ] = helper(N-1,summ,arr,dp)
+                return dp[N][summ]
+            dp[N][summ] = helper(N-1,summ,arr,dp) or helper(N-1,summ-arr[N-1],arr,dp)
+            return dp[N][summ]
+        return helper(N,summ,arr,dp)
+
+if __name__ == '__main__': 
+    t = int (input ())
+    for _ in range (t):
+        N = int(input())
+        arr = input().split()
+        for itr in range(N):
+            arr[itr] = int(arr[itr])
+        sum = int(input())
+
+        ob = Solution()
+        if ob.isSubsetSum(N,arr,sum)==True:
+            print(1)
+        else :
+            print(0)
