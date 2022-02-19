@@ -1,4 +1,9 @@
 Problem Link: https://practice.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1
+SAMPLE INPUT:
+3
+4
+1 2 3
+4 5 1
 
 #RECURSIVE SOLUTION ------THIS WILL GIVE YOU TLE
 
