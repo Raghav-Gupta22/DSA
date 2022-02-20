@@ -1,0 +1,44 @@
+Problem Link: https://leetcode.com/problems/partition-equal-subset-sum/
+
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        #recursion approach will give tle beacose we have to do it with DP
+#         s=sum(nums)
+#         if s % 2 !=0:
+#             return False
+#         else:
+#             return self.solve(0,nums,s//2)
+        
+#     def solve(self,i,nums,s):
+#             if s ==0:
+#                 return True
+            
+#             if s!=0 and i == len(nums):
+#                 return False
+            
+#             return self.solve(i+1,nums,s-nums[i]) or self.solve(i+1,nums,s)
+
+--------------------------Tabluation method
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        s=sum(nums)
+        if s % 2 !=0:
+            return False
+        else:
+            summ=s//2
+            N=len(nums)
+            arr=nums[:]
+            dp=[[False]*(summ+1) for i in range(N+1)]
+            for i in range(N + 1):
+                dp[i][0] = True
+            for i in range(1,summ + 1):
+                dp[0][i]= False
+            for i in range(1,N+1):
+                for j in range(1,summ+1):
+                    if arr[i-1]<=j:
+                        dp[i][j]=dp[i-1][j-arr[i-1]] or dp[i-1][j]
+                    else:
+                        dp[i][j]=dp[i-1][j]
+            return dp[N][summ]
+            
+            
