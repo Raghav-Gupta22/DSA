@@ -29,3 +29,32 @@ if __name__ == '__main__':
         ob = Solution()
         print(ob.matrixMultiplication(N, arr))
         
+        
+--------------------------#MEMOIZATION
+
+class Solution:
+    def matrixMultiplication(self, N, arr):
+        dp=[[-1]*(N+1) for i in range(N+1)]
+        def solve(i,j):
+            if i>=j:
+                return 0    
+            if dp[i][j]!=-1:
+                return dp[i][j]
+            minn=float('inf')
+            for k in range(i,j):
+                minn=min(minn,solve(i,k)+solve(k+1,j)+(arr[i-1]*arr[k]*arr[j]))
+                dp[i][j]=minn
+            return dp[i][j]
+            
+        return solve(1,N-1)
+
+if __name__ == '__main__':
+    t = int(input())
+    for _ in range(t):
+        N = int(input())
+        arr = input().split()
+        for i in range(N):
+            arr[i] = int(arr[i])
+        
+        ob = Solution()
+        print(ob.matrixMultiplication(N, arr))
