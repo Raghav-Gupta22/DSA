@@ -1,0 +1,35 @@
+Problem Link :https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1/#
+
+class Solution:
+    def palindromicPartition(self, arr):
+        arr=list(arr)
+        N=len(arr)
+        dp=[[-1]*(N+1) for i in range(N+1)]
+        def solve(i,j):
+            if i>=j:
+                dp[i][j]= 0
+                return dp[i][j]
+                
+            if dp[i][j]!=-1:
+                return dp[i][j]
+                
+            if arr[i:j+1]==arr[i:j+1][::-1]:
+                dp[i][j]= 0
+                return dp[i][j]
+            
+            minn=float('inf')
+            for k in range(i,j):
+                minn=min(minn,solve(i,k)+solve(k+1,j)+1)
+                dp[i][j]=minn
+            
+            return dp[i][j]
+            
+        return solve(0,N-1)
+
+if __name__ == '__main__':
+    t = int(input())
+    for _ in range (t):
+        string = input()
+        
+        ob = Solution()
+        print(ob.palindromicPartition(string))
