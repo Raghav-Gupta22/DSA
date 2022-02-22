@@ -1,5 +1,6 @@
 Problem Link :https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1/#
 
+----------------------------#MEMOIZATION
 class Solution:
     def palindromicPartition(self, arr):
         arr=list(arr)
