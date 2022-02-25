@@ -1,6 +1,6 @@
 Problem Link :https://practice.geeksforgeeks.org/problems/palindromic-patitioning4845/1/#
 
-----------------------------#MEMOIZATION
+----------------------------#MEMOIZATION (WILL GIVE TLE)
 class Solution:
     def palindromicPartition(self, arr):
         arr=list(arr)
@@ -34,3 +34,46 @@ if __name__ == '__main__':
         
         ob = Solution()
         print(ob.palindromicPartition(string))
+        
+        
+        
+#------------------------------LITTLE OPTIMIZATION ON MEMOIZATION CODE (STILL GIVES TLE)
+
+PROBLEM LINK: https://leetcode.com/problems/palindrome-partitioning-ii/
+class Solution:
+    def minCut(self, arr: str) -> int:
+        N=len(arr)
+        dp=[[-1]*(N+1) for i in range(N+1)]
+        palindrome={}
+        for i in range(len(arr)):
+            for j in range(i,len(arr)):
+                if arr[i:j+1]==arr[i:j+1][::-1]:
+                    palindrome[arr[i:j+1]]=0
+        def solve(i,j):
+            if i>=j:
+                dp[i][j]= 0
+                return dp[i][j]
+                
+            if dp[i][j]!=-1:
+                return dp[i][j]
+                
+            if arr[i:j+1] in palindrome:
+                dp[i][j]= 0
+                return dp[i][j]
+            
+            minn=float('inf')
+            for k in range(i,j):
+                if dp[i][k]!=-1:
+                    a=dp[i][k]
+                else:
+                    a=solve(i,k)
+                if dp[k+1][j]!=-1:
+                    b=dp[k+1][j]
+                else:
+                    b=solve(k+1,j)
+                minn=min(minn,a+b+1)
+                dp[i][j]=minn
+            
+            return dp[i][j]
+            
+        return solve(0,N-1)
