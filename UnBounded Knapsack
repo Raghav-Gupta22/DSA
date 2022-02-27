@@ -1,0 +1,29 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/knapsack-with-duplicate-items4201/1/#
+
+----------------------------------RECURSIVE SOLUTION (WILL GIVE TLE)
+class Solution:
+    def knapSack(self, N, W, val, wt):
+        # code here
+        def solve(N,W):
+            if W<=0 or N==0:
+                return 0
+            
+            if wt[N-1]<=W:
+                return max(val[N-1]+solve(N,W-wt[N-1]),solve(N-1,W))
+            else:
+                return solve(N-1,W)
+        return solve(N,W)
+
+if __name__ == '__main__':
+    t = int(input())
+    for _ in range(t):
+        N, W = [int(x) for x in input().split()]
+        val = input().split()
+        for itr in range(N):
+            val[itr] = int(val[itr])
+        wt = input().split()
+        for it in range(N):
+            wt[it] = int(wt[it])
+        
+        ob = Solution()
+        print(ob.knapSack(N, W, val, wt))
