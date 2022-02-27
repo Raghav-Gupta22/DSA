@@ -5,7 +5,7 @@ class Solution:
     def knapSack(self, N, W, val, wt):
         # code here
         def solve(N,W):
-            if W<=0 or N==0:
+            if W==0 or N==0:
                 return 0
             
             if wt[N-1]<=W:
@@ -27,3 +27,28 @@ if __name__ == '__main__':
         
         ob = Solution()
         print(ob.knapSack(N, W, val, wt))
+
+
+-----------------------------------------MEMOIZED DP SOLUTION
+
+class Solution:
+    def knapSack(self,W, wt, val, n):
+        dp=[[0 for i in range(W+1)] for j in range(n+1)]
+        
+        def recur(W, wt, val, n):
+            if W==0 or n==0:
+                return 0
+                
+            if dp[n][W]!=0:
+                return dp[n][W]
+             
+            if wt[n-1]<=W:
+                dp[n][W]=max((val[n-1]+recur(W-wt[n-1],wt,val,n)),recur(W,wt,val,n-1))          
+                return dp[n][W]
+                
+            elif wt[n-1] > W:
+                dp[n][W]=recur(W,wt,val,n-1)
+                return dp[n][W]
+                
+        return recur(W, wt, val, n)
+        
