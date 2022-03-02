@@ -1,0 +1,34 @@
+Problem Link:https://practice.geeksforgeeks.org/problems/minimum-sum-partition3317/1/#
+
+import math
+class Solution:
+    def minDifference(self, arr, N):
+        summ=sum(arr)
+        dp=[[False]*(summ+1) for i in range(N+1)]
+        for i in range(N + 1):
+            dp[i][0] = True
+        for i in range(1,summ + 1):
+            dp[0][i]= False
+        for i in range(1,N+1):
+            for j in range(1,summ+1):
+                if arr[i-1]<=j:
+                    dp[i][j]=dp[i-1][j-arr[i-1]] or dp[i-1][j]
+                else:
+                    dp[i][j]=dp[i-1][j]
+        ranges=dp[N]
+        #print(ranges)
+        minn=float('inf')
+        for i in range(math.ceil(len(ranges)/2)):
+            if ranges[i]==True:
+                minn=min(minn,summ- 2*i)
+        return minn
+
+if __name__ == '__main__':
+    T=int(input())
+    for i in range(T):
+        N = int(input())
+        arr = [int(x) for x in input().split()]
+        ob = Solution()
+        ans = ob.minDifference(arr, N)
+        print(ans)
+        
