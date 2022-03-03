@@ -13,3 +13,26 @@ class Solution:
             return max(solve(i+2,n)+nums[i],solve(i+1,n))
         
         return max(solve(0,len(nums)-1),solve(1,len(nums)))
+        
+-----------------------------DP MEMOIZATION 
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n = len(nums)
+        #We will maintain two dp for each recursive call
+        dp1 = [-1] * n
+        dp2 = [-1] * n
+        if len(nums)==1:
+            return nums[0]
+        def solve(i,n,dp):
+            if i>=n:
+                return 0
+            if dp[i] != -1: 
+                return dp[i]
+
+            dp[i]=max(solve(i+2,n,dp)+nums[i],solve(i+1,n,dp))
+            return dp[i]
+        
+        return max(solve(0,len(nums)-1,dp1),solve(1,len(nums),dp2))
+       
+       
