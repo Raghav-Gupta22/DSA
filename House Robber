@@ -1,0 +1,33 @@
+Problem Link: https://leetcode.com/problems/house-robber/
+
+------------------Recursion solution (WILL GIVE TLE)
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums)==1:
+            return nums[0]
+        def solve(i):
+            if i>=len(nums):
+                return 0
+        
+            return max(solve(i+2)+nums[i],solve(i+1))
+        
+        return max(solve(0),solve(1))
+        
+        
+        
+-------------------DP MEMOIZATION SOLUTION
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums)==1:
+            return nums[0]
+        n=len(nums)
+        dp=[-1]*(n+1)
+        def solve(i):
+            if i >= n :
+                return 0
+            if dp[i]!=-1:
+                return dp[i]
+            dp[i]=max(solve(i+2)+nums[i],solve(i+1))
+            return dp[i]
+
+        return max(solve(0),solve(1))
