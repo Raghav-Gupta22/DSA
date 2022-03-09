@@ -1,0 +1,23 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/level-order-traversal/1/
+
+
+from queue import deque
+class Solution:
+    #Function to return the level order traversal of a tree.
+    def levelOrder(self,root ):
+        # Code here
+        queue=deque()
+        ans=[]
+        if root:
+            queue.append(root)
+        else:
+            return root
+        
+        while queue:
+            x=queue.popleft()
+            ans.append(x.data)
+            if x.left:
+                queue.append(x.left)
+            if x.right:
+                queue.append(x.right)
+        return ans
