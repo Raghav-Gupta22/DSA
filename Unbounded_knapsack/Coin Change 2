@@ -1,0 +1,63 @@
+Problem link : https://leetcode.com/problems/coin-change-2/
+
+class Solution:
+    def change(self, amount: int, coins: List[int]) -> int:
+        #RECURSION--------
+        ans=[0]
+        def recur(i,s,ans):
+            if s==amount:
+                ans[0]+= 1
+                return 
+            if s>amount or i==len(coins):
+                return 0
+            
+            s+=coins[i]
+            recur(i,s,ans)
+            s-=coins[i]
+            recur(i+1,s,ans)
+            
+        recur(0,0,ans)
+        return ans[0]
+        
+        #RECURSION WAY 2---------
+        def recur(i,s):
+            if s==amount:
+                return 1
+            if s>amount or i==len(coins):
+                return 0
+            
+            return recur(i,s+coins[i])+recur(i+1,s)
+        return recur(0,0)
+        
+        #MEMOIZATION
+        dp=[[-1]*(amount+1) for i in range(len(coins)+1)]
+        def recur(i,j):
+            
+            if dp[i][j] != -1:
+                return dp[i][j]
+            
+            if j==amount:
+                return 1
+            if j>amount or i==len(coins):
+                return 0
+            
+            if j+coins[i] < len(dp[i]):
+                dp[i][j] = recur(i,j+coins[i]) + recur(i+1,j)
+            else:
+                dp[i][j] = recur(i+1,j)
+
+            return dp[i][j]
+        return recur(0,0)
+
+        #TopDown
+        dp=[[0 for i in range(amount+1)] for j in range(len(coins)+1)]
+        for i in range(len(coins)+1):
+            for j in range(amount+1):
+                if j==0 and i!=0:
+                    dp[i][j]=1
+                else:
+                    if coins[i-1]<=j:
+                        dp[i][j]=dp[i][j-coins[i-1]]+dp[i-1][j]
+                    else:
+                        dp[i][j]=dp[i-1][j]
+        return dp[i][j]
