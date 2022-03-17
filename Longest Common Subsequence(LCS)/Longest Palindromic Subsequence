@@ -1,4 +1,4 @@
-Problem Link: [Longest Palindromic Subsequence](https://practice.geeksforgeeks.org/problems/longest-palindromic-subsequence-1612327878/1/#)
+Problem Link: https://practice.geeksforgeeks.org/problems/longest-palindromic-subsequence-1612327878/1/#
 
 class Solution:
     def longestPalinSubseq(self, s1):
