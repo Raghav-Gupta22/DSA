@@ -1,0 +1,22 @@
+Problem Link: https://leetcode.com/problems/word-ladder
+
+from queue import deque
+class Solution:
+    def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
+        queue=deque()
+        wordList=set(wordList)
+        queue.append((beginWord,1))
+        if endWord not in wordList:
+            return 0
+        while queue:
+            word,number=queue.popleft()
+            
+            if word == endWord:
+                return number
+            for w in range(len(word)):
+                for i in range(97,123):
+                    x=(word[0:w] + chr(i) + word[w+1:len(word)])
+                    if x in wordList and x!=beginWord:
+                        queue.append((x,number+1))
+                        wordList.remove(x)
+        return 0
