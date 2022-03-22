@@ -1,0 +1,11 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/preorder-traversal/1#
+
+def preorder(root):
+        ans=[]
+        def solve(root):
+            if root!=None:
+                ans.append(root.data)
+                solve(root.left)
+                solve(root.right)
+            return ans
+        return solve(root)
