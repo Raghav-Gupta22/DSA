@@ -1,0 +1,12 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/postorder-traversal/1#
+
+def postOrder(root):
+    # code here
+    ans=[]
+    def solve(root):
+        if root!=None:
+            solve(root.left)
+            solve(root.right)
+            ans.append(root.data)
+        return ans
+    return solve(root)
