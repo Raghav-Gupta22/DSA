@@ -1,0 +1,12 @@
+Problem Link : https://practice.geeksforgeeks.org/problems/inorder-traversal/1#
+
+class Solution:
+    def InOrder(self,root):
+        ans=[]
+        def solve(root):
+            if root!=None:
+                solve(root.left)
+                ans.append(root.data)
+                solve(root.right)
+            return ans
+        return solve(root)
