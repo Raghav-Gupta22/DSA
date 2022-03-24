@@ -1,0 +1,28 @@
+class getNode:
+    def __init__(self, data):
+        self.val = data
+        self.left = self.right = None
+
+if __name__ == '__main__':
+     
+    # binary tree formation
+    root = getNode(1)
+    root.left = getNode(2)
+    root.right = getNode(3)
+    root.left.left = getNode(4)
+    root.left.right = getNode(5)
+    root.right.left = getNode(6)
+    root.right.right = getNode(7)
+         
+    x = 7
+    def dfs(root,x,temp):
+        if root:
+            if root.left == None and root.right==None and root.val == x:
+                temp.append(root.val)
+                print(temp)
+            
+            temp.append(root.val)
+            dfs(root.left,x,temp)
+            dfs(root.right,x,temp)
+            temp.pop()
+    dfs(root,x,[])
