@@ -1,0 +1,29 @@
+Problem Link : https://leetcode.com/problems/maximum-depth-of-binary-tree/
+
+#BFS:
+queue=deque()
+ans=[]
+right=[]
+newlen=0
+if root:
+    queue.append(root)
+else:
+    return 0
+
+l=len(queue)
+while queue:
+    curr=[]
+    newlen=0
+    while l and queue:
+        x=queue.popleft()
+        curr.append(x.val)
+        if x.left:
+            queue.append(x.left)
+            newlen+=1
+        if x.right:
+            queue.append(x.right)
+            newlen+=1
+        l-=1
+    ans.append(curr)
+    l=newlen
+return len(ans)
