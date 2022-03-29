@@ -1,0 +1,27 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/form-a-palindrome1455/1/#
+Problem Link: https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
+
+class Solution:
+    def minInsertions(self, text1: str) -> int:
+        text2=text1[::-1]
+        m=len(text1)
+        n=len(text2)
+        dp=[[-1]*(n+1) for i in range(m+1)]
+        def recur(m,n):
+            if m==0 or n==0:
+                return 0
+            
+            if dp[m][n]==-1:
+                if text1[m-1]==text2[n-1]:
+                    dp[m][n]=1+recur(m-1,n-1)
+                    return dp[m][n]
+                
+                else:
+                    dp[m][n]=max(recur(m,n-1),recur(m-1,n))
+                    return dp[m][n]
+                
+            else:
+                return dp[m][n]
+        
+        recur(m,n)
+        return m-dp[m][n]
