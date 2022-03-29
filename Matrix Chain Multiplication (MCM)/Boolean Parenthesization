@@ -1,0 +1,43 @@
+Problem Link: https://practice.geeksforgeeks.org/problems/boolean-parenthesization5610/1/#
+
+------------------------------------RECURSIVE CODE (working with lru_cache decorator)
+from functools import lru_cache
+class Solution:
+    def countWays(self, N, S):
+        @lru_cache(None)
+        def solve(i,j,isTrue):
+            if i>j:
+                return 1
+            
+            if i==j:
+                if isTrue:
+                    return int(S[i]=='T')
+                else:
+                    return int(S[i]=='F')
+            
+            ans=0
+            for k in range(i+1,j,2):
+                lt=solve(i,k-1,True)
+                rt=solve(k+1,j,True)
+                lf=solve(i,k-1,False)
+                rf=solve(k+1,j,False)
+                
+                if S[k] == '&':
+                    if isTrue:
+                        ans+=lt*rt
+                    else:
+                        ans+=lt*rf + rf*lf + rt*lf
+                
+                elif S[k] == '|':
+                    if isTrue:
+                        ans+=lt*rt + lt*rf + rt*lf
+                    else:
+                        ans+=lf*rf
+                
+                else:
+                    if isTrue:
+                        ans+=lt*rf + rt*lf
+                    else:
+                        ans+=lf*rf + rt*lt
+            return ans % 1003
+        return solve(0,len(S)-1,True)
