@@ -6,8 +6,8 @@ class Solution:
     def countWays(self, N, S):
         @lru_cache(None)
         def solve(i,j,isTrue):
-            if i>j:
-                return 1
+            if i>j:                      #actually no need of this condition because before happening of it at some point it will be equal to j and there we have                                                 return statement so this condition actually never meet.
+                return 0
             
             if i==j:
                 if isTrue:
