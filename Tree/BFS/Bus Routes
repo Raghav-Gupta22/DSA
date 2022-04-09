@@ -1,0 +1,33 @@
+Problem Link: https://leetcode.com/problems/bus-routes
+
+class Solution:
+    def numBusesToDestination(self, routes: List[List[int]], source: int, target: int) -> int:
+        hash_map=defaultdict(list)
+        for i in range(len(routes)):
+            for j in routes[i]:
+                hash_map[j].append(i)
+        
+        queue = deque()
+        bus_visited = set()
+        bus_stop_visited = set()
+        
+        queue.append(source)
+        bus_stop_visited.add(source)
+        level = 0
+        
+        while queue:
+            size = len(queue)
+            for i in range(size):
+                curr_bus_stop = queue.popleft()
+                if curr_bus_stop == target:
+                    return level
+                buses = hash_map[curr_bus_stop]
+                for bus in buses:
+                    if bus not in bus_visited:
+                        for bus_stop in routes[bus]:
+                            if bus_stop not in bus_stop_visited:
+                                queue.append(bus_stop)
+                                bus_stop_visited.add(bus_stop)
+                    bus_visited.add(bus)                        
+            level += 1
+        return -1
