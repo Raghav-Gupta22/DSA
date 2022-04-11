@@ -1,0 +1,17 @@
+Problem Link: https://leetcode.com/problems/jump-game-iii/
+
+class Solution:
+    def canReach(self, arr: List[int], start: int) -> bool:
+        visited=[False]*len(arr)
+        queue=deque()
+        queue.append((arr[start],start))
+        while queue:
+            jump, index=queue.popleft()
+            if arr[index]==0:
+                return True
+            if visited[index]==False:
+                visited[index]=True
+                if index-jump>=0:
+                    queue.append((arr[index-jump], index-jump))
+                if index+jump<len(arr):
+                    queue.append((arr[index+jump], index+jump))
