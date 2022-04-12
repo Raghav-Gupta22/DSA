@@ -1,0 +1,24 @@
+Problem Link: https://leetcode.com/problems/where-will-the-ball-fall/
+
+class Solution:
+    def findBall(self, grid: List[List[int]]) -> List[int]:
+        def dfs(i,j):
+            if i==rows:
+                ans.append(j)
+                return
+            
+            if grid[i][j]==1 and j+1<cols and grid[i][j+1]==1:
+                dfs(i+1,j+1)
+                
+            elif grid[i][j]==-1 and j-1>=0 and grid[i][j-1]==-1:
+                dfs(i+1,j-1)
+                
+            else:
+                ans.append(-1)
+        
+        ans=[]
+        rows=len(grid)
+        cols=len(grid[0])
+        for j in range(cols):
+            dfs(0,j)
+        return ans
