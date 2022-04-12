@@ -1,0 +1,30 @@
+Problem Link: https://leetcode.com/problems/max-area-of-island/
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        def solve(r,c):
+            grid[r][c]=-1
+            nonlocal count
+            if r-1>=0 and grid[r-1][c]==1:
+                count+=1
+                solve(r-1, c)
+
+            if c-1>=0 and grid[r][c-1]==1:
+                count+=1
+                solve(r, c-1)
+
+            if r+1<len(grid) and grid[r+1][c]==1:
+                count+=1
+                solve(r+1, c)
+
+            if c+1<len(grid[0]) and grid[r][c+1]==1:
+                count+=1
+                solve(r, c+1)
+        maxx=0
+        for i in range(len(grid)):
+            for j in range(len(grid[0])):
+                if grid[i][j]==1:
+                    count=1
+                    solve(i,j)
+                    maxx=max(maxx,count)
+        return maxx
