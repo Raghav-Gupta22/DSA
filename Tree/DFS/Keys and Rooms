@@ -1,0 +1,17 @@
+Problem Link: https://leetcode.com/problems/keys-and-rooms/
+
+class Solution:
+    def canVisitAllRooms(self, rooms: List[List[int]]) -> bool:
+        def dfs(i):
+            if visited[i]==False:
+                visited[i]=True
+                for j in rooms[i]:
+                    dfs(j)
+        visited=[False]*(len(rooms))
+        keys=defaultdict(list)
+        for i in range(len(rooms)):
+            for j in range(len(rooms[i])):
+                keys[i].append(rooms[i][j])
+        dfs(0)
+        return visited.count(True)==len(rooms)
+        
