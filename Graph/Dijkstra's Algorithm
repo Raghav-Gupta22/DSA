@@ -1,0 +1,34 @@
+Problem Link: https://leetcode.com/problems/network-delay-time
+
+class Solution:
+    def buildGraph(self,n, times):
+        weight=[[-1]*(n+1) for i in range(n+1)]
+        for i in times:
+            weight[i[0]][i[1]]=i[2]
+        return weight
+            
+        
+    def networkDelayTime(self, times: List[List[int]], n: int, src: int) -> int:
+        # using dijkstras algo
+        # parent=[-1]*(n+1)
+        visited=[False]*(n+1)
+        distance=[math.inf]*(n+1)
+        
+        distance[src]=0
+        minHeap=[]
+        heappush(minHeap,(0, src))
+        
+        weight=self.buildGraph(n,times)
+        while minHeap:
+            curr_distance, curr_node= heappop(minHeap)
+            if visited[curr_node] ==False:
+                visited[curr_node] =True
+                for vertex in range(1,n+1):
+                    if weight[curr_node][vertex]!=-1:
+                        distance[vertex] = min(distance[vertex],distance[curr_node] + weight[curr_node][vertex])
+                        heappush(minHeap, (distance[vertex], vertex))
+                        # parent[vertex]=curr_node
+        distance.pop(0)
+        if max(distance)==math.inf:
+            return -1
+        return max(distance)
