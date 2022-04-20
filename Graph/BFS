@@ -1,0 +1,28 @@
+Problem link: https://www.hackerrank.com/challenges/bfsshortreach/problem
+
+from queue import deque
+from collections import defaultdict
+
+def bfs(n, m, edges, s):
+    graph=defaultdict(list)
+    distance=[-1]*(n+1)
+    visited=[False]*(n+1)
+    queue=deque()
+    queue.append(s)
+    visited[s]=True
+    distance[s]=0
+    
+    for edge in edges:
+        graph[edge[0]].append(edge[1])
+        graph[edge[1]].append(edge[0])
+        
+    while queue:
+        node=queue.popleft()
+        curr_dist=distance[node]
+        for nbr in graph[node]:
+            if visited[nbr]==False:
+                visited[nbr]=True
+                queue.append(nbr)
+                distance[nbr]=curr_dist+6
+    distance.pop(s)
+    return distance[1:]
