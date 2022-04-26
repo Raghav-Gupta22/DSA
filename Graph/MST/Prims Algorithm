@@ -1,0 +1,35 @@
+# Prim's Algorithm using Adjacency Matrix
+# number of vertices in graph
+V = 5
+
+# for adjacency matrix to represent graph
+G = [[0, 9, 75, 0, 0],
+     [9, 0, 95, 19, 42],
+     [75, 95, 0, 51, 66],
+     [0, 19, 51, 0, 31],
+     [0, 42, 66, 31, 0]]
+     
+# create a array to track selected vertex
+# selected will become true otherwise false
+selected = [0, 0, 0, 0, 0]
+
+distance=[math.inf]*V
+selected[0] = True
+distance[0] = 0
+x = 0
+y = 0
+
+for no_edge in range(v-1):
+    minimum = math.inf
+    for i in range(V):
+        if selected[i]:
+            for j in range(V):
+                if ((not selected[j]) and G[i][j]):  
+                    if minimum > G[i][j]:
+                        minimum = G[i][j]
+                        x = i
+                        y = j
+    selected[y] = True
+    distance[y] = G[i][j]
+    
+return distance
