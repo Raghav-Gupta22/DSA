@@ -1,0 +1,25 @@
+def findSet(node,parent):#returns the leader parent of the set
+    if parent[node]==-1:
+        return node
+    return findSet(parent[node],parent)
+def unionSet(u,v,parent):
+    lpU=findSet(u,parent)
+    lpV=findSet(v,parent)
+    if lpU!=lpV:
+        parent[lpV]=lpU
+def kruskalsMST(vertices,edges):
+    edges.sort(key=lambda x:x[2])
+    parent=[-1]*vertices
+    ans=0
+    for edge in edges:
+        u,v,w=edge[0],edge[1],edge[2]
+        lpU=findSet(u,parent)
+        lpV=findSet(v,parent)
+        if lpU!=lpV:
+            unionSet(u,v,parent)
+            ans+=w
+    return ans
+if __name__=="__main__":
+    edges=[[1,2,1],[1,3,2],[1,4,2],[2,3,2],[2,4,3],[3,4,3]]
+    vertices=7
+    print(kruskalsMST(vertices,edges))
