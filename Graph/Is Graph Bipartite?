@@ -1,0 +1,44 @@
+Problem Link: https://leetcode.com/problems/is-graph-bipartite/
+
+class Solution:
+    def isBipartite(self, graph: List[List[int]]) -> bool:
+    
+        #DFS-------------------------------------------------------------
+        n=len(graph)
+        color=[-1]*(n)
+        def dfs(pos):
+            for i in graph[pos]:
+                if color[i]==-1:
+                    color[i]=1-color[pos]
+                    if not dfs(i):
+                        return False
+                else:
+                    if color[i]==color[pos]:
+                        return False
+            return True
+        for i in range(n):
+            if color[i]==-1:
+                color[i]=0
+                if not dfs(i):
+                    return False
+        return True
+    
+        #BFS----------------------------------------------------------------
+        n=len(graph)
+        color=[-1]*(n)
+        queue=deque()
+        for c in range(n):
+            if color[c]==-1:
+                color[c]=0
+                queue.append(c)
+                while queue:
+                    pos=queue.popleft()
+                    for i in graph[pos]:
+                        if color[i]==-1:
+                            queue.append(i)
+                            color[i]=1-color[pos]
+                        else:
+                            if color[i]==color[pos]:
+                                return False
+        return True
+        
