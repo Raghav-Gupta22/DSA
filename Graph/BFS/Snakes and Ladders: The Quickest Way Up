@@ -1,0 +1,71 @@
+Problem Link: https://www.hackerrank.com/challenges/the-quickest-way-up/problem
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+from collections import *
+
+def quickestWayUp(ladders, snakes):
+    # Write your code here
+    l=defaultdict(int)
+    s=defaultdict(int)
+    for i in ladders:
+        l[i[0]]=i[1]
+    
+    for i in snakes:
+        s[i[0]]=i[1]
+    queue=deque()
+    queue.append(1)
+    visited=set()
+    dice=[1,2,3,4,5,6]
+    moves=0
+    while queue:
+        length=len(queue)
+        for z in range(length):
+            node= queue.popleft()
+            if node==100:
+                return moves
+            for i in dice:
+                if i+node < 101 and i+node not in visited:
+                    if i+node in l:
+                        queue.append(l[i+node])
+                        visited.add(l[i+node])
+                    elif i+node in s:
+                        queue.append(s[i+node])
+                        visited.add(s[i+node])
+                    else:
+                        queue.append(i+node)
+                        visited.add(i+node)
+        moves+=1
+    return -1
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    t = int(input().strip())
+
+    for t_itr in range(t):
+        n = int(input().strip())
+
+        ladders = []
+
+        for _ in range(n):
+            ladders.append(list(map(int, input().rstrip().split())))
+
+        m = int(input().strip())
+
+        snakes = []
+
+        for _ in range(m):
+            snakes.append(list(map(int, input().rstrip().split())))
+
+        result = quickestWayUp(ladders, snakes)
+
+        fptr.write(str(result) + '\n')
+
+    fptr.close()
