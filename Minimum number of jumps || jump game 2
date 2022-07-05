@@ -1,0 +1,46 @@
+#RECURSIVE 1-----------------
+
+class Solution:
+    def minJumps(self, arr, n):
+        #code here
+        ans=float('inf')
+        @lru_cache(maxsize =None)
+        def recur(i,steps):
+            nonlocal ans
+            if i>=n-1:
+                ans=min(ans, steps)
+                return
+            
+            if arr[i]==0:
+                return
+            
+            for k in range(1,arr[i]+1):
+                recur(i+k,steps+1)
+        
+        recur(0, 0)
+        if ans==float('inf'):
+            return -1
+        return ans
+        
+#RECURSIVE 2--------------------------
+
+from functools import lru_cache
+import sys
+class Solution:
+    def minJumps(self, arr, n):
+        #code here
+        ans=float('inf')
+        @lru_cache(None)
+        def recur(i):
+            nonlocal ans
+            if i>=n-1:
+                return 0
+            
+            for k in range(1,arr[i]+1):
+                ans=min(ans, 1+recur(i+k))
+            return ans
+        
+        x=recur(0)
+        if x==float('inf'):
+            return -1
+        return x
